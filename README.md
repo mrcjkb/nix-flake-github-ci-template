@@ -1,4 +1,4 @@
-## Nix flake GitHub Action CI template
+## Nix flake GitHub Actions CI template
 
 A template for setting up GitHub Actions with [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
