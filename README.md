@@ -1,6 +1,6 @@
 ## Nix flake GitHub Action CI template
 
-A template for setting up GitHub Actions with [Nix flakes](https://nixos.wiki/wiki/Flakes)
+A template for setting up GitHub Actions with [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
 ![Nix](https://img.shields.io/badge/nix-0175C2?style=for-the-badge&logo=NixOS&logoColor=white)
 
