@@ -1,5 +1,5 @@
 {
-  description = "Nix flake CI template for GitHub Actions"; # TODO: Set description
+  description = "Fork of Volantres Cursors with the Material colour palette.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -14,27 +14,23 @@
       flake = false;
     };
 
-    # TODO: Add imports for tests here
   };
 
-  outputs = inputs@{ self, nixpkgs, pre-commit-hooks, ... }:
+  outputs = { self, nixpkgs, pre-commit-hooks, ... }:
     let
       supportedSystems = [
         "aarch64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
         "x86_64-linux"
       ];
       perSystem = nixpkgs.lib.genAttrs supportedSystems;
       pkgsFor = system: import nixpkgs { inherit system; };
 
-      ci-overlay = import ./nix/ci-overlay.nix { inherit (inputs); }; # TODO: Add test inputs as arguments here
+      overlay = import ./nix/overlay.nix;
 
       pre-commit-check-for = system: pre-commit-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           nixpkgs-fmt.enable = true;
-          # TODO: Add additional formatting checks here
         };
       };
 
@@ -44,17 +40,19 @@
           pre-commit-check = pre-commit-check-for system;
         in
         pkgs.mkShell {
-          name = "devShell"; # TODO: Choose a name
+          name = "volantres-cursors-material devShell";
           inherit (pre-commit-check) shellHook;
           buildInputs = with pkgs; [
             zlib
+            inkscape
+            xorg.xcursorgen
           ];
         };
     in
     {
       overlays = {
-        inherit ci-overlay;
-        default = ci-overlay;
+        inherit overlay;
+        default = overlay;
       };
 
       devShells = perSystem (system: rec {
@@ -62,17 +60,21 @@
         devShell = shellFor system;
       });
 
-      packages = perSystem (system: rec {
-        # TODO: Add packages here
-      });
+      packages = perSystem (system:
+        let
+          pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
+        in
+        {
+          default = pkgs.volantres-cursors-material;
+        });
 
       checks = perSystem (system:
         let
-          checkPkgs = import nixpkgs { inherit system; overlays = [ ci-overlay ]; };
+          checkPkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
         in
         {
           formatting = pre-commit-check-for system;
-          inherit (checkPkgs) ci;
+          inherit (checkPkgs) volantres-cursors-material;
         });
     };
 }

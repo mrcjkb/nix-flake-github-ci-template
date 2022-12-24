@@ -1,23 +1,31 @@
-## Nix flake GitHub Actions CI template
+# [WIP] Volantes Cursors [Material]
 
-A template for setting up GitHub Actions with [Nix flakes](https://nixos.wiki/wiki/Flakes).
+Fork of [Volantres Cursors](https://github.com/varlesh/volantes-cursors) with the [Material colour palette](https://material-theme.com/).
 
-![Nix](https://img.shields.io/badge/nix-0175C2?style=for-the-badge&logo=NixOS&logoColor=white)
+### Material Theme Variants
 
-## Prerequisites
+* Material Darker
+* Material Lighter
 
-* You must have a [Cachix binary cache](https://app.cachix.org/cache) set up and the `CACHIX_AUTH_TOKEN` variable must be set.
+### Manual Install
+
+1. Install dependencies:
+
+    - git
+    - make
+    - inkscape
+    - xcursorgen
+
+2. Run the following commands as normal user:
+
+    ```console
+    git clone https://github.com/varlesh/volantes-cursors.git
+    cd volantes-cursors
+    make build
+    sudo make install
+    ```
+
+3. Choose a theme in the Settings or in the Tweaks tool.
 
 
-## Setup
 
-1. Click on [Use this template](https://github.com/MrcJkb/nix-flake-github-ci-template/generate) to start a repo based on this template. (Do _not_ fork it.)
-2. Change the `name` in [`nix-build.yaml`](./.github/workflows/nix-build.yml).
-3. Add the test inputs to [`flake.nix`](./flake.nix).
-4. Add your tests to [`mkTest` in the `ci-overlay.nix`](./nix/ci-overlay.nix).
-
-
-## Contributing
-
-All contributions are welcome!
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
