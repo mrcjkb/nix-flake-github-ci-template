@@ -1,35 +1,31 @@
-{}: # TODO: Add flake.nix test inputs as arguments here
+{}:
+# TODO: Add flake.nix test inputs as arguments here
 final: prev:
 with final.lib;
-with final.stdenv;
+with final.stdenv; let
+  mkTest = {name}:
+    mkDerivation {
+      inherit name;
 
-let
-  mkTest = { name }: mkDerivation {
-    inherit name;
+      phases = [
+        "buildPhase"
+        "checkPhase"
+      ];
 
-    phases = [
-      "buildPhase"
-      "checkPhase"
-    ];
+      doCheck = true;
 
-    doCheck = true;
+      buildInputs = with final; [
+      ];
 
-    buildInputs = with final; [
-    ];
+      buildPhase = ''
+        mkdir -p $out
+        true
+      '';
 
-    buildPhase = ''
-      mkdir -p $out
-      true
-    '';
-
-    checkPhase = ''
-      true
-    '';
-  };
-
-in
-{
-
-  ci = mkTest { name = "ci"; };
-
+      checkPhase = ''
+        true
+      '';
+    };
+in {
+  ci = mkTest {name = "ci";};
 }
