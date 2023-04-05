@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Loosen license restrictions to allow any OSI approved open source derivations
+
 ## [3.0.0] - 2023-01-02
 
 ### Added
