@@ -53,9 +53,11 @@
       devShell = pkgs.mkShell {
         name = "devShell"; # TODO: Choose a name
         inherit (pre-commit-check) shellHook;
-        buildInputs = with pkgs; [
-          zlib
-        ];
+        buildInputs = with pkgs;
+          [
+            zlib
+          ]
+          ++ self.checks.${system}.pre-commit-check.enabledPackages;
       };
     in {
       devShells = {
